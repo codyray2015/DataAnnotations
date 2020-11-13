@@ -1,4 +1,5 @@
 import { DataAnnotations } from './DataAnnotations';
+const KEY = "RegularExpression"
 
 export function RegularExpressionValidFactory(reg:RegExp, errMsg?: string) {
     return (arg, propertyKey: string) => {
@@ -15,7 +16,7 @@ export function RegularExpressionValidFactory(reg:RegExp, errMsg?: string) {
 export function RegularExpression<T>(reg:RegExp, option?:RegularExpressionOption<T>) {
     return (target: any, propertyKey: string) => {
         const valid = RegularExpressionValidFactory(reg,option?.ErrorMsg);
-        DataAnnotations.DefineLimiter(target, propertyKey, valid);
+        DataAnnotations.DefineLimiter(KEY,target, propertyKey, valid);
         if(!option?.CallBack){
             return;
         }

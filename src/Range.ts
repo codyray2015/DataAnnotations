@@ -1,5 +1,7 @@
 import { DataAnnotations } from './DataAnnotations';
 
+const KEY = "Range";
+
 export function RangeValidFactory(min: number, max: number, errMsg?: string) {
     return (arg, propertyKey: string) => {
         const ErrMsg = errMsg ?? `The field ${propertyKey} must be between ${min} and ${max}.`
@@ -25,7 +27,7 @@ export function RangeValidFactory(min: number, max: number, errMsg?: string) {
 export function Range<T>(min: number, max: number, option?:RangeOption<T>) {
     return (target: any, propertyKey: string) => {
         const valid = RangeValidFactory(min,max,option?.ErrorMsg);
-        DataAnnotations.DefineLimiter(target, propertyKey, valid);
+        DataAnnotations.DefineLimiter(KEY,target, propertyKey, valid);
         if(!option?.CallBack){
             return;
         }

@@ -1,6 +1,6 @@
 {
   "name": "data-annotations",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/index.ts",
   "types": "dist/index.d.ts",
