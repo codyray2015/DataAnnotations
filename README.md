@@ -44,7 +44,7 @@ npm install data-annotations --save
     const obj = { test:'123' }
 
     function foo(){
-        DataAnnotations.DefineLimiter(obj, "test", (arg) => {
+        DataAnnotations.DefineLimiter("MyLimiter",obj, "test", (arg) => {
             if (arg == "123") {
                 return "you can't input '123'";
             }
@@ -53,7 +53,46 @@ npm install data-annotations --save
     }
 ```
 
+
+
+
 #### 搞基技巧 Plus
+
+你可以设置你的ErrorMsg使你在一些表单绑定属性使快速获取反馈信息，例如
+
+```
+    export class Test{
+        @Required("you need input Phone or Email")  <-----
+        public TestStr:string;
+    }
+
+```
+
+同样可以在外层实例化时替换错误提示
+
+```
+    function foo(){
+        const obj = new Test();
+        Required("Email will do")(obj,"TestStr");  <------
+    }
+
+```
+
+#### 搞基技巧 Plus Plus
+
+我们有时甚至想让错误提示自己出现而不去手动触发
+
+```
+    function foo(){
+        const obj = new Test();
+        Required("Email will do",(e)=>{
+            //....Do something
+
+        })(obj,"TestStr");
+    }
+```
+
+#### 搞基技巧 Plus Plus Plus
 
 你可以使用内置的 `DataAnnotations.SetChangeListener()` 向任何对象的属性设置变更监听器，当然，匿名也是可行的, 但前提是目标属性至少需要有一个限制器，无论用何种方式去设置他
 
