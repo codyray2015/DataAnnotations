@@ -77,7 +77,7 @@ npm install data-annotations --save
 
 ``` ts
     export class Test{
-        @RequiredFactory("you need input Phone or Email")  <-----
+        @Required("you need input Phone or Email")  <-----
         public TestStr:string;
     }
 
