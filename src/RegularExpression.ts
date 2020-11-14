@@ -1,7 +1,7 @@
 import { DataAnnotations } from './DataAnnotations';
 const KEY = "RegularExpression"
 
-export function RegularExpressionValidFactory(reg:RegExp, errMsg?: string) {
+function RegularExpressionValidFactory(reg:RegExp, errMsg?: string) {
     return (arg, propertyKey: string) => {
         const ErrMsg = errMsg ?? `The field ${propertyKey} must match the regular expression '${reg}'.`
         switch (typeof arg) {
@@ -14,6 +14,13 @@ export function RegularExpressionValidFactory(reg:RegExp, errMsg?: string) {
 }
 
 export function RegularExpression<T>(reg:RegExp, option?:RegularExpressionOption<T>) {
+    return (target: any, propertyKey: string) => {
+        const valid = RegularExpressionValidFactory(reg,option?.ErrorMsg);
+        DataAnnotations.DefineDecoratorsLimiter(KEY,target, propertyKey, valid);
+    }
+}
+
+export function RegularExpressionFactory<T>(reg:RegExp, option?:RegularExpressionOption<T>){
     return (target: any, propertyKey: string) => {
         const valid = RegularExpressionValidFactory(reg,option?.ErrorMsg);
         DataAnnotations.DefineLimiter(KEY,target, propertyKey, valid);

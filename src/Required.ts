@@ -2,7 +2,7 @@ import { DataAnnotations } from './DataAnnotations';
 
 const KEY = "Required";
 
-export function RequiredValidFactory(errorMsg?) {
+function RequiredValidFactory(errorMsg?) {
     return (arg, propertyKey): string => {
         const ErrorMsg = errorMsg ?? `The ${propertyKey} field is required`
         switch (typeof arg) {
@@ -16,20 +16,16 @@ export function RequiredValidFactory(errorMsg?) {
     }
 }
 
-export function Required<T>(errorMsg: string, callBack?: (arg:T, e: string) => void)
-export function Required<T>(target: any, propertyKey: string)
-export function Required<T>(a: any | string, b?: string | ((arg, e: string) => void)) {
+export function Required<T>(errorMsg: string):(target: any, propertyKey: string) => void
+export function Required<T>(target: any, propertyKey: string):void
+export function Required<T>(a: any | string, b?: string) {
     if (typeof a === "string") {
-        return _Required_msg(a, b as (e: string) => void);
+        return _Required_msg(a);
     }
     _Required(a, b as string);
 }
 
-function _Required(target: any, propertyKey: string) {
-    DataAnnotations.DefineLimiter(KEY,target, propertyKey, RequiredValidFactory());
-}
-
-function _Required_msg<T>(errorMsg: string, callBack?: (arg:T, e: string) => void) {
+export function RequiredFactory<T>(errorMsg: string, callBack?: (arg:T, e: string) => void):(target: any, propertyKey: string) => void{
     return (target: any, propertyKey: string) => {
         const valid = RequiredValidFactory(errorMsg);
         DataAnnotations.DefineLimiter(KEY,target, propertyKey, valid);
@@ -41,5 +37,16 @@ function _Required_msg<T>(errorMsg: string, callBack?: (arg:T, e: string) => voi
         })
 
 
+    };
+}
+
+function _Required(target: any, propertyKey: string) {
+    DataAnnotations.DefineDecoratorsLimiter(KEY,target, propertyKey, RequiredValidFactory());
+}
+
+function _Required_msg<T>(errorMsg: string) {
+    return (target: any, propertyKey: string) => {
+        const valid = RequiredValidFactory(errorMsg);
+        DataAnnotations.DefineDecoratorsLimiter(KEY,target, propertyKey, valid);
     }
 }
