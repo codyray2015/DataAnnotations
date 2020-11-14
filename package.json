@@ -1,7 +1,7 @@
 {
   "name": "data-annotations",
-  "version": "1.2.0",
-  "description": "提供了一些常用的对象属性限制器，以及可自定义化的限制器注入",
+  "version": "1.2.1",
+  "description": "Some common object property limiters and customizable limiter injection are provided",
   "main": "dist/index.ts",
   "types": "dist/index.d.ts",
   "dependencies": {

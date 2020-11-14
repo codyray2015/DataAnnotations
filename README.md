@@ -1,11 +1,15 @@
 # data-annotations
 
-提供了一些常用的对象属性限制器，以及可自定义化的限制器注入
+Some common object property limiters and customizable limiter injection are provided
 
-内置三种常见限制器
-> 1. Required   应用于需要必填字段时的限制
-> 2. Range 它可以让你的数字处于某个区间 例如 2-10
-> 3. RegularExpression 它能在String类型的属性中匹配正则
+> [中文文档](https://github.com/wmm-xs/DataAnnotations/blob/master/README-zh-cn.md) 
+> 
+> [English(by google translate)](https://github.com/wmm-xs/DataAnnotations/blob/master/README.md)
+
+Built in three common limiters
+> 1. `Required`   Restrictions applied when required fields
+> 2. `Range` It can put your numbers in a certain range, like 2-10
+> 3. `RegularExpression` It can match regular in string type properties
 
 ## Installation
 
@@ -15,9 +19,9 @@ npm install data-annotations --save
 
 ## Usage
 
-### 使用内置限制器
+### Use built-in limiter
 
-内置限制器的使用特别方便，您只需要在您需要限制的地方简单的加上一个修饰器就能调出，就像这样
+The built-in limiter is particularly convenient to use, you only need to simply add a modifier to the place you need to limit to call it up, like this
 
 ``` ts
     export class Test{
@@ -26,7 +30,7 @@ npm install data-annotations --save
     }
 ```
 
-**关键** 如果您使用了修饰型的限制器(就像上面这个)，你需要在对象构建后调用 `DataAnnotations.LimiterInit(obj)` 进行初始化，方能使限制器生效
+**Warning!** If you use a modified limiter (like the one above), you need to call `DataAnnotations.LimiterInit(obj)` to initialize after the object is constructed to make the limiter effective
 
 ``` ts
     export class Test{
@@ -38,7 +42,7 @@ npm install data-annotations --save
     }
 ```
 
-当我们需要检查限制器时只需简单的调用一个 `DataAnnotations.IsValid(obj)` 即可，like this
+When we need to check the limiter, we simply call a `DataAnnotations.IsValid(obj)`, like this
 
 ``` ts
     function foo(){
@@ -50,9 +54,9 @@ npm install data-annotations --save
 
 ------
 
-#### 搞基技巧
+### Advanced skills
 
-你可以使用内置的 `DataAnnotations.DefineLimiter()` 向任何对象的属性动态的设置自定义的限制器，哪怕是匿名对象，看这，存在错误时返回**错误内容**，通过返回**Null**
+You can use the built-in `DataAnnotations.DefineLimiter()` to dynamically set a custom limiter to the properties of any object, even anonymous objects. if there is an error, it returns **error content**, by return **Null**
 
 ``` ts
     const obj = { test:'123' }
@@ -67,13 +71,13 @@ npm install data-annotations --save
     }
 ```
 
-内置限制器为动态注入提供了一个`Factory`您可以使用此方法来进行动态的注入内置拦截器或是修改错误提示
+The built-in limiter provides a `Factory` for dynamic injection. You can use this method to dynamically inject the built-in interceptor or modify the error message
 
 ------
 
-#### 搞基技巧 Plus
+#### Advanced skills Plus
 
-你可以设置你的ErrorMsg使你在一些表单绑定属性使快速获取反馈信息，例如
+You can set your ErrorMsg to bind properties to some forms to quickly get feedback information, for example
 
 ``` ts
     export class Test{
@@ -83,7 +87,7 @@ npm install data-annotations --save
 
 ```
 
-同样可以在外层实例化时替换错误提示
+The error message can also be replaced when the outer layer is instantiated
 
 ``` ts
     function foo(){
@@ -93,9 +97,9 @@ npm install data-annotations --save
 
 ```
 ------
-#### 搞基技巧 Plus Plus
+#### Advanced skills Plus Plus
 
-我们有时甚至想让错误提示自己出现而不去手动触发
+We sometimes even want to let the error prompt appear by itself instead of manually trigger
 
 ``` ts
     function foo(){
@@ -107,9 +111,9 @@ npm install data-annotations --save
     }
 ```
 -------
-#### 搞基技巧 Plus Plus Plus
+#### Advanced skills Plus Plus Plus
 
-你可以使用内置的 `DataAnnotations.SetChangeListener()` 向任何对象的属性设置变更监听器，当然，匿名也是可行的, 但前提是目标属性至少需要有一个限制器，无论用何种方式去设置他
+You can use the built-in `DataAnnotations.SetChangeListener()` to set a change listener to the properties of any object. Of course, anonymous is also possible, but the premise is that the target property needs at least one limiter, no matter how you set it
 
 ``` ts
     const obj = { test:'123' }
