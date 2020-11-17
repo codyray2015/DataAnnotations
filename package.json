@@ -1,6 +1,6 @@
 {
   "name": "data-annotations",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Some common object property limiters and customizable limiter injection are provided",
   "main": "dist/index.ts",
   "types": "dist/index.d.ts",

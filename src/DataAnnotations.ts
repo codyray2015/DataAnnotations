@@ -2,8 +2,7 @@ import "reflect-metadata";
 
 const KEY_LIMITER = "LIMITER";
 const KEY_LIMITER_SET_Listener = "LIMITER_SET_Listener"
-export const KEY_Unregistered = "Unregistered"
-let Send = 0;
+export const KEY_Unregistered = "Registered"
 
 export class DataAnnotations {
 
@@ -38,9 +37,9 @@ export class DataAnnotations {
 
 
   public static DefineLimiter(limiterKey, target, propertyKey: string, callBack: (arg, propertyKey: string) => string) {
-    const newProertyKey = `_${Send++}${propertyKey}`;
+    const newProertyKey = `_${propertyKey}_`;
     Object.defineProperty(target, newProertyKey, { configurable: true, writable: true, value: target[propertyKey] ?? '' });
-    
+
     const setter = value => {
       target[newProertyKey] = value;
       const f = this.GetChangeListener(target, propertyKey);
