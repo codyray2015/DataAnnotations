@@ -13,6 +13,12 @@ function RangeValidFactory(min: number, max: number, errMsg?: string) {
             case "number":
                 x = arg;
                 break
+            case "object":
+                if (Array.isArray(arg)) {
+                    x = arg.length;
+                    break;
+                }
+                return null;
             default:
                 return null;
         }
