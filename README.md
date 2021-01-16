@@ -4,7 +4,7 @@ Some common object property limiters and customizable limiter injection are prov
 
 > [中文文档](https://github.com/wmm-xs/DataAnnotations/blob/master/README-zh-cn.md) 
 > 
-> [English(by google translate)](https://github.com/wmm-xs/DataAnnotations/blob/master/README.md)
+> [English](https://github.com/wmm-xs/DataAnnotations/blob/master/README.md)
 
 Built in three common limiters
 > 1. `Required`   Restrictions applied when required fields
