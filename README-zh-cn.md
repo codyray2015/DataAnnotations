@@ -4,7 +4,7 @@
 
 > [中文文档](https://github.com/wmm-xs/DataAnnotations/blob/master/README-zh-cn.md) 
 > 
-> [English(by google translate)](https://github.com/wmm-xs/DataAnnotations/blob/master/README.md)
+> [English](https://github.com/wmm-xs/DataAnnotations/blob/master/README.md)
 
 内置三种常见限制器
 > 1. Required   应用于需要必填字段时的限制
