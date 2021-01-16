@@ -54,7 +54,7 @@ When we need to check the limiter, we simply call a `DataAnnotations.IsValid(obj
 
 ------
 
-### Advanced skills
+### Custom limiter
 
 You can use the built-in `DataAnnotations.DefineLimiter()` to dynamically set a custom limiter to the properties of any object, even anonymous objects. if there is an error, it returns **error content**, by return **Null**
 
@@ -75,7 +75,7 @@ The built-in limiter provides a `Factory` for dynamic injection. You can use thi
 
 ------
 
-#### Advanced skills Plus
+#### Reflection error message
 
 You can set your ErrorMsg to bind properties to some forms to quickly get feedback information, for example
 
@@ -97,7 +97,7 @@ The error message can also be replaced when the outer layer is instantiated
 
 ```
 ------
-#### Advanced skills Plus Plus
+#### Error listener
 
 We sometimes even want to let the error prompt appear by itself instead of manually trigger
 
@@ -111,7 +111,7 @@ We sometimes even want to let the error prompt appear by itself instead of manua
     }
 ```
 -------
-#### Advanced skills Plus Plus Plus
+#### Change listener
 
 You can use the built-in `DataAnnotations.SetChangeListener()` to set a change listener to the properties of any object. Of course, anonymous is also possible, but the premise is that the target property needs at least one limiter, no matter how you set it
 
