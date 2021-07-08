@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { isJsonIgnore, JsonIgnore } from "./JsonIgnore";
 
 const KEY_LIMITER = "LIMITER";
 const KEY_LIMITER_SET_Listener = "LIMITER_SET_Listener"
@@ -14,8 +15,17 @@ export class DataAnnotations {
         map[key] = err;
       }
     }
-
     return { Success: !Object.keys(map).length, Error: map };
+  }
+
+  public static IsArrayValid(...obj) {
+    for (let i = 0; i < obj.length; i++) {
+      const result = this.IsValid(obj[i]);
+      if (!result.Success) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private static Valid(obj, key) {
@@ -61,7 +71,7 @@ export class DataAnnotations {
   }
 
   private static AddtoJsonFun(target) {
-    if(target["toJSON"]){
+    if (target["toJSON"]) {
       return;
     }
 
@@ -70,7 +80,8 @@ export class DataAnnotations {
       value: () => {
         const jsonObj = {} as any;
         for (let x in target) {
-          jsonObj[x] = target[x];
+          if (!isJsonIgnore(target, x))
+            jsonObj[x] = target[x];
         }
         return jsonObj
       }
@@ -88,34 +99,32 @@ export class DataAnnotations {
     return Reflect.getMetadata(KEY_LIMITER_SET_Listener, target, propertyKey) ?? [];
   }
 
-  public static LimiterInit(target){
+  public static LimiterInit(target) {
     var limiter = this.GetRegisteredLimiter(target);
     limiter.forEach(element => {
-      this.DefineLimiter(element.Key,target,element.PropertyKey,element.CallBack);
+      this.DefineLimiter(element.Key, target, element.PropertyKey, element.CallBack);
     });
   }
-  
 
-  public static DefineDecoratorsLimiter(limiterKey, target, propertyKey: string, callBack: (arg, propertyKey: string) => string){
+
+  public static DefineDecoratorsLimiter(limiterKey, target, propertyKey: string, callBack: (arg, propertyKey: string) => string) {
     var limiter = this.GetRegisteredLimiter(target);
-    limiter.push(new Limiter(limiterKey,propertyKey,callBack));
+    limiter.push(new Limiter(limiterKey, propertyKey, callBack));
     Object.defineProperty(target, KEY_Unregistered, { configurable: true, writable: true, value: limiter });
   }
 
-  private static GetRegisteredLimiter(target):Limiter[]{
+  private static GetRegisteredLimiter(target): Limiter[] {
     return target[KEY_Unregistered] ?? [];
   }
-
-
 }
 
-export class Limiter{
-  constructor(key:string,propertyKey:string,callBack:(arg, propertyKey: string) => string){
+export class Limiter {
+  constructor(key: string, propertyKey: string, callBack: (arg, propertyKey: string) => string) {
     this.Key = key;
     this.CallBack = callBack;
     this.PropertyKey = propertyKey
   }
-  Key:string;
+  Key: string;
   PropertyKey: string;
   CallBack: (arg, propertyKey: string) => string;
 }
